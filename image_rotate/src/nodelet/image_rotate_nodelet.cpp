@@ -127,7 +127,7 @@ class ImageRotateNodelet : public nodelet::Nodelet
       target_vector_.header.stamp = msg->header.stamp;
       target_vector_.header.frame_id = frameWithDefault(config_.target_frame_id, input_frame_id);
       geometry_msgs::Vector3Stamped target_vector_transformed;
-      geometry_msgs::TransformStamped transform = tf_buffer_.lookupTransform(config_.target_frame_id, input_frame_id, msg->header.stamp);
+      geometry_msgs::TransformStamped transform = tf_buffer_.lookupTransform(input_frame_id, config_.target_frame_id, msg->header.stamp);
       tf2::doTransform(target_vector_, target_vector_transformed, transform);
 
       // Transform the source vector into the image frame.

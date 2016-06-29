@@ -119,6 +119,10 @@ class ImageRotateNodelet : public nodelet::Nodelet
     {
       std::string input_frame_id = frameWithDefault(config_.input_frame_id, input_frame_from_msg);
 
+      // Wait for required transformations
+      tf_buffer_.canTransform(config_.target_frame_id, input_frame_id, msg->header.stamp, ros::Duration(1.0));
+      tf_buffer_.canTransform(config_.source_frame_id, input_frame_id, msg->header.stamp, ros::Duration(1.0));
+
       // Transform the target vector into the image frame.
       target_vector_.header.stamp = msg->header.stamp;
       target_vector_.header.frame_id = frameWithDefault(config_.target_frame_id, input_frame_id);
